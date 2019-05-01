@@ -18,7 +18,7 @@ We've so far looked at analyzing different datasets in a variety of contexts. Mo
 
 Consider an scenario where we have a dataset of different images, each of which belongs to the classes "cat" or  "dog" as shown in the image below . The analytical task in hand is about classifying the data so our algorithm can understand cats from dogs.
 
-<img src="catdog.jpg" width=400>
+<img src="images/catdog.jpg" width=400>
 
 
 First we need to convert this data into sets of numbers so that our classifier can learn from them. This is analogous to converting text data into a numerical representation with TF/IDF etc. One criteria could be using colors of these images to distinguish between them. A naive descriptor could consist of three numbers to represent the RGB (Red-Green-Blue) colors. A simple decision tree type classifier can induce following rule from dataset:
@@ -30,7 +30,7 @@ else :
 ```
 As you can probably tell, image color alone will not be able to successfully discriminate between two classes. We can therefore, think about adding some new features (dimensions) in addition to color. We could decide to add some features that describe the texture of the image. For example, calculating the average edge or gradient intensity in both the X and Y direction. Adding these 2 new features (x, y coordinates) to existing color features, we now have 5 features that could possibly be used for required classification task. Similar We can also add yet more features like color/texture histograms, statistical measures like correlations etc to improve the performance of the classifier. So apparently, what we see here is more features mean better classification. But this is not always the case, After a certain point, extra dimensions will starting hurting the performance as shown in the following figure. 
 
-![](dim1.png)
+![](images/dim1.png)
 
 We can see as dimensionality increases, the classifier's performance increases until an optimal number of features is reached. 
 
@@ -46,18 +46,18 @@ With above problem scenario, imagine there are infinite number of cats and dogs 
 Feature space refers to the n-dimensions where your variables live (not including a target variable, if it is present). The term is used often in ML literature because a task in ML is feature extraction, hence we view all variables as features.
 
 Let's add one feature to feature space first , the average red color, and try to classify the data using 1-D feature as shown below: 
-![](1f.png)
+![](images/1f.png)
 
 So this is clearly not enough as there is some shade of red present for both classes. Let's add another feature e.g. the average 'green' color in the image.
 
-![](2f.png)
+![](images/2f.png)
 
 So now the data is spread out in the feature space but still, we cant fit a linear classifier as these classes are still not linearly separable (no single line through the space can discriminate between two classes). Maybe things will look better with more features. Let's throw in the average blue color as a third feature. We may see something similar to image below, where we now have a 3d space.
 
-![](3f.png)
+![](images/3f.png)
 
 Is this data classifiable, in the three-dimensional feature space, we can now find a plane that perfectly separates dogs from cats (Remember, this is just an example. In real world you would need a lot more than this). So a linear combination of the three features can be used to obtain perfect classification results on our training data of 10 images.
-![](plane.png)
+![](images/plane.png)
 
 So we see in this example scenario that __increasing the number of features until perfect classification results are obtained is the best way to train a classifier__, However, earlier we discussed that this is not the case. Confusing right ? Let's try to work through this below
 
@@ -76,12 +76,12 @@ Note how the density of the training samples decreases exponentially when we inc
 
 If we would keep adding features, our feature space becomes more sparse. Due to this sparsity, it becomes easier to find a separable hyperplane because the likelihood that a training sample lies on the wrong side of the best hyperplane becomes infinitely small when the number of features becomes infinitely large. However, if we project the highly dimensional classification result back to a lower dimensional space, a serious problem associated with this approach arises as shown below:
 
-![](sp2.png)
+![](images/sp2.png)
 
 Above, we have results of 3 feature classification in a 3-D space, projected back to a 2-D space. The data was linearly separable in the 3D, but not in a lower dimensional feature space. Adding the third dimension performs a complicated __non-linear__ classifier in the lower dimensional feature space. As a result, the classifier learns the existence and appearance of 10 instances in great detail, along with exceptions. Because of this, the resulting classifier will most likely fail on real-world data, consisting of an infinite amount of unseen cats and dogs that often do not adhere to these appearances and exceptions.
 
 Such over-fitting is a direct result of the curse of dimensionality. The following figure shows the result of a linear classifier that has been trained using only 2 features instead of 3.
-![](2dok.png)
+![](images/2dok.png)
 
 Although this is not perfect classification as we had in 3D, this classifier will be more __generalizable__ for previously unseen data. In other words, by using less features, the curse of dimensionality can be avoided such that our classifier does not over-fit training data. 
 
@@ -95,7 +95,7 @@ Let's say we want to train a classifier using only a single unique feature with 
 - If we add another feature, resulting in a 2D feature space, to cover 20% of the 2D feature range, we now need to obtain 45% of the complete population of cats and dogs in each dimension (0.45^2 = 0.2). 
 - In the 3D case this gets even worse: to cover 20% of the 3D feature range, we need to obtain 58% of the population in each dimension (0.58^3 = 0.2).
 
-![](cont.png)
+![](images/cont.png)
 
 #### So what do we conclude from above ?
 
@@ -110,7 +110,7 @@ __Dimensionality Causes Sparsity__
 Another effect of the curse of dimensionality, is that this sparseness is not uniformly distributed over the feature space. In fact, data around the origin (at the center of the hypercube) is much more sparse than data in the corners of the space. 
 
 Imagine a unit square that represents the 2D feature space. The average of the feature space is the center of this unit square, and all points within unit distance from this center, are inside a unit circle that inscribes the unit square as shown below:
-![](unit.png)
+![](images/unit.png)
 
 
 
@@ -119,10 +119,10 @@ The training samples that do not fall within this unit circle are closer to the 
 
 An interesting question is now how the volume of the circle (a hypersphere) changes relative to the volume of the square (a hypercube) when we increase the dimensionality of the feature space.
 The following plot shows how the volume of the inscribing hypersphere of dimension d and with radius 0.5 changes when the dimensionality increases:
-![](hyper.png)
+![](images/hyper.png)
 
 In high dimensional spaces, __most of the training data resides in the corners of the hypercube__ defining the feature space.Instances in the corners of the feature space are much more difficult to classify than instances around the centre of the hypersphere. Following  shows a 2D unit square, a 3D unit cube, and an imaginative visualization of an 8D hypercube which has 2^8 = 256 corners.
-![](8d.png)
+![](images/8d.png)
 
 ### Distance Measures and Dimensionality 
 
