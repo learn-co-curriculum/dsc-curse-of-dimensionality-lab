@@ -32,8 +32,7 @@ import numpy as np
 
 ```python
 def euclidean_distance(p1, p2):
-    p1, p2 = np.array(p1), np.array(p2) #Ensure p1/p2 are NumPy Arrays
-    return np.sqrt(np.sum(np.square(p2-p1)))
+    #Your code here
 ```
 
 ## Average Distance From the Origin
@@ -50,19 +49,8 @@ sns.set_style('darkgrid')
 
 
 ```python
-avg_distances = []
-for n in range(1, 1001):
-    avg_distances.append(np.mean([euclidean_distance(np.random.uniform(low=-10, high=10, size=n), [0 for i in range(n)]) for p in range(100)]))
-plt.figure(figsize=(10,10))
-plt.plot(range(1,1001), avg_distances)
-plt.xlabel('Number of Dimensions')
-plt.ylabel('Average Distance to Origin')
-plt.title('Investigating Sparseness and the Curse of Dimensionality');
+#Your code here
 ```
-
-
-![png](index_files/index_7_0.png)
-
 
 ## Convergence Time
 
@@ -77,66 +65,15 @@ from sklearn.linear_model import LinearRegression, Lasso
 
 
 ```python
-ols = LinearRegression()
+#Your code here
 ```
-
-
-```python
-sample_size = 10**3
-times = []
-for n in range(1,1001):
-    xi = [np.random.uniform(low=-10, high=10, size=n) for i in range(sample_size)]
-    coeff = np.array(range(1,n+1))
-    yi = np.sum(coeff*xi, axis=1) + np.random.normal(loc=0, scale=.1, size=sample_size)
-    ols = LinearRegression()
-    start = datetime.datetime.now()
-    ols.fit(xi, yi)
-    end = datetime.datetime.now()
-    elapsed = end - start
-    times.append(elapsed)
-plt.plot(range(1,1001), [t.microseconds for t in times]);
-```
-
-
-
-
-    [<matplotlib.lines.Line2D at 0x1a201dec50>]
-
-
-
-
-![png](index_files/index_11_1.png)
-
 
 ## Repeat the Same Experiment for a Lasso Penalized Regression Model
 
 
 ```python
-sample_size = 10**3
-times = []
-for n in range(1,1001):
-    xi = [np.random.uniform(low=-10, high=10, size=n) for i in range(sample_size)]
-    coeff = np.array(range(1,n+1))
-    yi = np.sum(coeff*xi, axis=1) + np.random.normal(loc=0, scale=.1, size=sample_size)
-    ols = Lasso()
-    start = datetime.datetime.now()
-    ols.fit(xi, yi)
-    end = datetime.datetime.now()
-    elapsed = end - start
-    times.append(elapsed)
-plt.plot(range(1,1001), [t.microseconds for t in times]);
+#Your code here
 ```
-
-
-
-
-    [<matplotlib.lines.Line2D at 0x10e3efba8>]
-
-
-
-
-![png](index_files/index_13_1.png)
-
 
 ## Optional: Show Just How Slow it Can Go!
 
@@ -144,24 +81,8 @@ If you're up for putting your computer through the ringer and are very patient t
 
 
 ```python
-sample_size = 10**3
-times = []
-for n in range(1,10001):
-    start = datetime.datetime.now()
-    xi = [np.random.uniform(low=-10, high=10, size=n) for i in range(sample_size)]
-    coeff = np.array(range(1,n+1))
-    yi = np.sum(coeff*xi, axis=1) + np.random.normal(loc=0, scale=.1, size=sample_size)
-    ols = Lasso()
-    ols.fit(xi, yi)
-    end = datetime.datetime.now()
-    elapsed = end - start
-    times.append(elapsed)
-plt.plot(range(1,10001), [t.microseconds for t in times]);
+#Your code here
 ```
-
-
-![png](index_files/index_15_0.png)
-
 
 ## Summary
 
