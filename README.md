@@ -35,6 +35,20 @@ def euclidean_distance(p1, p2):
     #Your code here
 ```
 
+
+```python
+# __SOLUTION__ 
+import numpy as np
+```
+
+
+```python
+# __SOLUTION__ 
+def euclidean_distance(p1, p2):
+    p1, p2 = np.array(p1), np.array(p2) #Ensure p1/p2 are NumPy Arrays
+    return np.sqrt(np.sum(np.square(p2-p1)))
+```
+
 ## Average Distance From the Origin
 
 To examine the curse of dimensionality, you'll investigate the average distance to the center of n-dimensional space. As you'll see, this average distance increases as the number of dimensions increases. To investigate this, generate 100 random points for various n-dimensional spaces. Investigate n-dimensional spaces from n=1 to n=1000. In each of these, construct the 100 random points using a random number between -10 and 10 for each dimension of the point. From there, calculate the average distance from each of these points to the origin. Finally, plot this relationship on a graph; the x-axis will be the n, the number of dimensions, and the y-axis will be the average distance from the origin.
@@ -52,6 +66,32 @@ sns.set_style('darkgrid')
 #Your code here
 ```
 
+
+```python
+# __SOLUTION__ 
+import matplotlib.pyplot as plt
+import seaborn as sns
+%matplotlib inline
+sns.set_style('darkgrid')
+```
+
+
+```python
+# __SOLUTION__ 
+avg_distances = []
+for n in range(1, 1001):
+    avg_distances.append(np.mean([euclidean_distance(np.random.uniform(low=-10, high=10, size=n), [0 for i in range(n)]) for p in range(100)]))
+plt.figure(figsize=(10,10))
+plt.plot(range(1,1001), avg_distances)
+plt.xlabel('Number of Dimensions')
+plt.ylabel('Average Distance to Origin')
+plt.title('Investigating Sparseness and the Curse of Dimensionality');
+```
+
+
+![png](index_files/index_11_0.png)
+
+
 ## Convergence Time
 
 As you've heard, another issue with increasing feature space is the training time required to fit a machine learning model. While more data will generally lead to better predictive results, it will also substantially increase training time. To demonstrate this, generate lists of random numbers as you did above. Then, use this list of random numbers as a feature in a mock dataset; choose an arbitrary coefficient and multiply the feature vector by this coefficient. Then sum these feature-coefficient products to get an output y. To spice things up (and not have a completely deterministic relationship), add a normally distributed white noise parameter to your output values. Fit an ordinary least squares model to your generated mock data. Repeat this for a varying number of features, and record the time required to fit the model. (Be sure to only record the time to train the model, not the time to generate the data.) Finally, plot the number of features, n, versus the training time for the subsequent model.
@@ -68,12 +108,84 @@ from sklearn.linear_model import LinearRegression, Lasso
 #Your code here
 ```
 
+
+```python
+# __SOLUTION__ 
+import pandas as pd
+import datetime
+from sklearn.linear_model import LinearRegression, Lasso
+```
+
+
+```python
+# __SOLUTION__ 
+ols = LinearRegression()
+```
+
+
+```python
+# __SOLUTION__ 
+sample_size = 10**3
+times = []
+for n in range(1,1001):
+    xi = [np.random.uniform(low=-10, high=10, size=n) for i in range(sample_size)]
+    coeff = np.array(range(1,n+1))
+    yi = np.sum(coeff*xi, axis=1) + np.random.normal(loc=0, scale=.1, size=sample_size)
+    ols = LinearRegression()
+    start = datetime.datetime.now()
+    ols.fit(xi, yi)
+    end = datetime.datetime.now()
+    elapsed = end - start
+    times.append(elapsed)
+plt.plot(range(1,1001), [t.microseconds for t in times]);
+```
+
+
+
+
+    [<matplotlib.lines.Line2D at 0x1a201dec50>]
+
+
+
+
+![png](index_files/index_17_1.png)
+
+
 ## Repeat the Same Experiment for a Lasso Penalized Regression Model
 
 
 ```python
 #Your code here
 ```
+
+
+```python
+# __SOLUTION__ 
+sample_size = 10**3
+times = []
+for n in range(1,1001):
+    xi = [np.random.uniform(low=-10, high=10, size=n) for i in range(sample_size)]
+    coeff = np.array(range(1,n+1))
+    yi = np.sum(coeff*xi, axis=1) + np.random.normal(loc=0, scale=.1, size=sample_size)
+    ols = Lasso()
+    start = datetime.datetime.now()
+    ols.fit(xi, yi)
+    end = datetime.datetime.now()
+    elapsed = end - start
+    times.append(elapsed)
+plt.plot(range(1,1001), [t.microseconds for t in times]);
+```
+
+
+
+
+    [<matplotlib.lines.Line2D at 0x10e3efba8>]
+
+
+
+
+![png](index_files/index_20_1.png)
+
 
 ## Optional: Show Just How Slow it Can Go!
 
@@ -83,6 +195,28 @@ If you're up for putting your computer through the ringer and are very patient t
 ```python
 #Your code here
 ```
+
+
+```python
+# __SOLUTION__ 
+sample_size = 10**3
+times = []
+for n in range(1,10001):
+    start = datetime.datetime.now()
+    xi = [np.random.uniform(low=-10, high=10, size=n) for i in range(sample_size)]
+    coeff = np.array(range(1,n+1))
+    yi = np.sum(coeff*xi, axis=1) + np.random.normal(loc=0, scale=.1, size=sample_size)
+    ols = Lasso()
+    ols.fit(xi, yi)
+    end = datetime.datetime.now()
+    elapsed = end - start
+    times.append(elapsed)
+plt.plot(range(1,10001), [t.microseconds for t in times]);
+```
+
+
+![png](index_files/index_23_0.png)
+
 
 ## Summary
 
