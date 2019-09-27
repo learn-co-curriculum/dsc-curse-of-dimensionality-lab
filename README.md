@@ -68,7 +68,7 @@ plt.title('Investigating Sparseness and the Curse of Dimensionality');
 
 As you've heard, another issue with increasing feature space is the training time required to fit a machine learning model. While more data will generally lead to better predictive results, it will also substantially increase training time. To demonstrate this, generate lists of random numbers as you did above. Then, use this list of random numbers as a feature in a mock dataset; choose an arbitrary coefficient and multiply the feature vector by this coefficient. Then sum these feature-coefficient products to get an output y. To spice things up (and not have a completely deterministic relationship), add a normally distributed white noise parameter to your output values. Fit an ordinary least squares model to your generated mock data. Repeat this for a varying number of features, and record the time required to fit the model. (Be sure to only record the time to train the model, not the time to generate the data.) Finally, plot the number of features, n, versus the training time for the subsequent model.
 
-Expect your code to take about a minute to run on a 2.7 GHz speed CPU. 
+⏰ Your code may take about a minute to run. 
 
 
 ```python
@@ -112,7 +112,7 @@ plt.plot(range(1,1001), [t.microseconds for t in times]);
 
 ## Repeat the Same Experiment for a Lasso Penalized Regression Model
 
-You can expect your code to take over a minute to run on a 2.7 GHz speed CPU.
+⏰ Your code may take over a minute to run. 
 
 
 ```python
@@ -146,7 +146,7 @@ plt.plot(range(1,1001), [t.microseconds for t in times]);
 
 If you're up for putting your computer through the ringer and are very patient to allow the necessary computations, try increasing the maximum n from 1000 to 10,000 using Lasso regression. You should see an interesting pattern unveil. See if you can make any hypotheses as to why this might occur!
 
-_Note: You can expect your code to take over an hour to run on a 2.7 GHz speed CPU!_
+_Note:_ ⏰ _You can expect your code to take over an hour to run on a 2.7 GHz speed CPU!_
 
 
 ```python
