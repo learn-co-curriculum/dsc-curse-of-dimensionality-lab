@@ -50,7 +50,10 @@ sns.set_style('darkgrid')
 ```python
 avg_distances = []
 for n in range(1, 1001):
-    avg_distances.append(np.mean([euclidean_distance(np.random.uniform(low=-10, high=10, size=n), [0 for i in range(n)]) for p in range(100)]))
+    p1 = np.random.uniform(low=-10, high=10, size=n)
+    p2 = [0 for i in range(n)]
+    distance = np.mean([euclidean_distance(p1 ,p2) for p in range(100)])
+    avg_distances.append(distance)
 plt.figure(figsize=(10, 10))
 plt.plot(range(1, 1001), avg_distances)
 plt.xlabel('Number of Dimensions')
@@ -59,7 +62,9 @@ plt.title('Investigating Sparseness and the Curse of Dimensionality');
 ```
 
 
+    
 ![png](index_files/index_7_0.png)
+    
 
 
 ## Convergence Time
@@ -94,7 +99,9 @@ plt.plot(range(1,1001), [t.microseconds for t in times]);
 ```
 
 
+    
 ![png](index_files/index_10_0.png)
+    
 
 
 - Repeat the same experiment for a Lasso penalized regression model
@@ -118,7 +125,9 @@ plt.plot(range(1, 1001), [t.microseconds for t in times]);
 ```
 
 
+    
 ![png](index_files/index_12_0.png)
+    
 
 
 ## Optional (Level Up)
@@ -148,7 +157,9 @@ plt.plot(range(1, 10001), [t.microseconds for t in times]);
 ```
 
 
+    
 ![png](index_files/index_14_0.png)
+    
 
 
 ## Summary
